@@ -51,6 +51,7 @@ while fx*fy > i:
 #    print(i)
 px,py=0,0
 poves = []
+n=0
 for line in lev:
     try:
         px = line.index('p')
@@ -70,15 +71,16 @@ while True:
             poves.append((px, py+1, int(lev[py+1][px])))
         if not lev[py-1][px] == 'w':
             poves.append((px, py-1, int(lev[py-1][px])))
-        lev[py][px] = 'w'
         high = sorted(poves, key=lambda poves: poves[2])
         high = high[len(high)-1]
+        lev[py][px] = -1-n
         px = high[0]
         py = high[1]
         if lev[py][px] == 1000:
             print("'AI' has found its way to the end!")
             exit()
         lev[py][px] = 'p'
+        n+=1
     except Exception as e:
         print("Failed to find space!")
         print(str(e))
