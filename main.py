@@ -1,4 +1,4 @@
-
+\
 lev=[]
 with open('map.txt') as f:
     for line in f:
@@ -9,7 +9,8 @@ with open('map.txt') as f:
         lev.append(tmp)
 ly=len(lev)
 lx=len(lev[0])
-print(lev)
+for i in lev:
+    print(i)
 fx=0
 fy=0
 for line in lev:
@@ -21,35 +22,31 @@ for line in lev:
     fy+=1
 print(fx,fy)
 lev[fy][fx] = 1000
-chlocks = [[fx,fy,1000]]
-checkedposse=[]
 i=0
-while fx*fy > i:
-    try:
-        curr=chlocks.pop(0)
-    except:
-        break
-    checkedposse.append(curr)
-    if lev[curr[1]][curr[0]-1] == '0':
-        lev[curr[1]][curr[0]-1] = curr[2]-1
-        chlocks.append([curr[1],curr[0]-1,curr[2]-1])
-    if lev[curr[1]-1][curr[0]] == '0':
-        lev[curr[1]-1][curr[0]] = curr[2]-1
-        chlocks.append([curr[1]-1,curr[0],curr[2]-1])
-    if lev[curr[1]][curr[0]+1] == '0':
-        lev[curr[1]][curr[0]+1] = curr[2]-1
-        chlocks.append([curr[1],curr[0]+1,curr[2]-1])
-    if lev[curr[1]+1][curr[0]] == '0':
-        lev[curr[1]+1][curr[0]] = curr[2]-1
-        chlocks.append([curr[1]+1,curr[0],curr[2]-1])
+poves = []
+check = [[fx,fy,1000]]
+ox,oy=fx,fy
+while ox*oy*2 > i:
+    for curr in check:
+        poves=[]
+        fx,fy = curr[0], curr[1]
+        if not lev[fy][fx+1] == 'w' and not type(lev[fy][fx+1]) == int:
+            poves.append((fx+1, fy, int(lev[fy][fx+1])))
+        if not lev[fy][fx-1] == 'w' and not type(lev[fy][fx-1]) == int:
+            poves.append((fx-1, fy, int(lev[fy][fx-1])))
+        if not lev[fy+1][fx] == 'w' and not type(lev[fy+1][fx]) == int:
+            poves.append((fx, fy+1, int(lev[fy+1][fx])))
+        if not lev[fy-1][fx] == 'w' and not type(lev[fy-1][fx]) == int:
+            poves.append((fx, fy-1, int(lev[fy-1][fx])))
+        print(poves)
+        for ords in poves:
+            lev[ords[1]][ords[0]] = lev[fy][fx] - 1
+        try:
+            check.append([poves[len(poves)-1][0],poves[len(poves)-1][1]])
+        except:
+            check.append([poves[0][0],poves[0][1]])
     i+=1
-    #for i32 in lev:
-    #    print(i32)
-    #print(chlocks)
-    #input()
     print(i)
-#for i in lev:
-#    print(i)
 px,py=0,0
 poves = []
 n=0
