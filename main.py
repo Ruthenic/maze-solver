@@ -41,6 +41,7 @@ while fx*fy > i:
         chlocks.append([curr[1],curr[0]+1,curr[2]-1])
     if lev[curr[1]+1][curr[0]] == '0':
         lev[curr[1]+1][curr[0]] = curr[2]-1
+        chlocks.append([curr[1]+1,curr[0],curr[2]-1])
     i+=1
     #for i32 in lev:
     #    print(i32)
