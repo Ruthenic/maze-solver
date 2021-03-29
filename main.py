@@ -1,4 +1,3 @@
-\
 lev=[]
 with open('map.txt') as f:
     for line in f:
@@ -24,32 +23,38 @@ print(fx,fy)
 lev[fy][fx] = 1000
 i=0
 poves = []
-check = [[fx,fy,1000]]
+check = [[fx,fy]]
 ox,oy=fx,fy
-while ox*oy*2 > i:
-    for curr in check:
-        poves=[]
-        fx,fy = curr[0], curr[1]
-        if not lev[fy][fx+1] == 'w' and not type(lev[fy][fx+1]) == int:
-            poves.append((fx+1, fy, int(lev[fy][fx+1])))
-        if not lev[fy][fx-1] == 'w' and not type(lev[fy][fx-1]) == int:
-            poves.append((fx-1, fy, int(lev[fy][fx-1])))
-        if not lev[fy+1][fx] == 'w' and not type(lev[fy+1][fx]) == int:
-            poves.append((fx, fy+1, int(lev[fy+1][fx])))
-        if not lev[fy-1][fx] == 'w' and not type(lev[fy-1][fx]) == int:
-            poves.append((fx, fy-1, int(lev[fy-1][fx])))
-        print(poves)
-        for ords in poves:
-            lev[ords[1]][ords[0]] = lev[fy][fx] - 1
-        try:
-            check.append([poves[len(poves)-1][0],poves[len(poves)-1][1]])
-        except:
-            check.append([poves[0][0],poves[0][1]])
+xindex,yindex=0,0
+while ox*oy > i:
+    for asdf in check:
+        fx,fy = asdf[0], asdf[1]
+        poves = []
+        coords = [[fy,fx+1,lev[fy][fx]], [fy,fx-1,lev[fy][fx]], [fy+1,fx,lev[fy][fx]], [fy-1,fx,lev[fy][fx]]]
+        for it in coords:
+            coord = lev[it[0]][it[1]]
+            if not coord == 'w' and not coord == 'p' and not type(coord) == int:
+                poves.append(it)
+        for it in poves:
+            lev[it[0]][it[1]] = int(lev[fy][fx])-1
+            check.append([it[1], it[0]])
     i+=1
-    print(i)
+'''for line in lev:
+    xindex=0
+    print(yindex, xindex)
+    for coord in line: 
+        if not coord == 'w' and not coord == 'p' and not type(coord) == int:
+            lev[yindex][xindex] = (1000-(fy-yindex))-(fx-xindex)
+        xindex+=1
+    yindex+=1
+    for i in lev:
+        print(i)    
+''' #add as fallback code if main method fails?
 px,py=0,0
 poves = []
 n=0
+for i in lev:
+    print(i)
 for line in lev:
     try:
         px = line.index('p')
